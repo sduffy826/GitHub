@@ -1,0 +1,16 @@
+*.class
+
+#package files
+*.war
+*.jar
+*.ear
+*.zip
+*.tar
+
+#eclipse specific
+.project
+.metadata
+local.properties
+.classpath
+.settings
+.loadpath

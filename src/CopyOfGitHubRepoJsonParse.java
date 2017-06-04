@@ -31,7 +31,8 @@ public class CopyOfGitHubRepoJsonParse {
     con.setRequestMethod("GET");
     // add request header
     con.setRequestProperty("User-Agent", USER_AGENT);
-    con.addRequestProperty("Accept","application/vnd.github.v2a+json");
+    con.addRequestProperty("Accept","application/vnd.github.v3+json");
+    
     int responseCode = con.getResponseCode();
 
     System.out.println("\nSending 'GET' request to URL : " + url);

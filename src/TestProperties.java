@@ -2,7 +2,7 @@ public class TestProperties {
 
   /**
    * This is just a simple mainline program to test using a properties file; the GitHubHelper
-   * does the work for us, I updated it after the merge conflict with the origin
+   * does the work for us, I updated it after the merge conflict with the origin MOORE
    * @param args - Not used
    */
   public static void main(String[] args) {

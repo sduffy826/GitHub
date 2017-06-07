@@ -1,7 +1,7 @@
-
 public class TestProperties {
 
   /**
+   * Added comment here, to create a conflict
    * @param args
    */
   public static void main(String[] args) {
@@ -19,5 +19,5 @@ public class TestProperties {
         " Organization: " + organization + 
         " User: " + userid);
   }
-
+  // foo - another conflict
 }

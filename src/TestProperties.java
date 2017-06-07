@@ -1,8 +1,9 @@
-
 public class TestProperties {
 
   /**
-   * @param args
+   * This is just a simple mainline program to test using a properties file; the GitHubHelper
+   * does the work for us :)
+   * @param args - Not used
    */
   public static void main(String[] args) {
     // TODO Auto-generated method stub
@@ -19,5 +20,4 @@ public class TestProperties {
         " Organization: " + organization + 
         " User: " + userid);
   }
-
 }

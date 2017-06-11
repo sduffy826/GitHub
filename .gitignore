@@ -16,3 +16,4 @@ local.properties
 .loadpath
 logon.properties
 /target/
+/bin/

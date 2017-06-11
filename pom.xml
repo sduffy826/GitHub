@@ -31,9 +31,9 @@
 		<!-- Use the latest version whenever possible. -->
 		<jackson.version>2.9.0.pr3</jackson.version>
 	</properties>
-	
+
 	<dependencies>
-	    <dependency>
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>${jackson.version}</version>
@@ -44,9 +44,14 @@
 			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.fasterxml.jackson.core</groupId>
-	      <artifactId>jackson-annotations</artifactId>
-		  <version>${jackson.version}</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
 		</dependency>
 	</dependencies>
 

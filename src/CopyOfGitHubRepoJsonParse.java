@@ -49,8 +49,7 @@ public class CopyOfGitHubRepoJsonParse {
 
     // print result
     System.out.println(response.toString());
-    
-    
+        
     ObjectMapper mapper = new ObjectMapper();
     JsonNode rootNode = mapper.readTree(response.toString());
     for (JsonNode aNode : rootNode) {
@@ -59,8 +58,6 @@ public class CopyOfGitHubRepoJsonParse {
       System.out.println("  created: " + aNode.get("created_at").toString());
       System.out.println("  updated: " + aNode.get("updated_at").toString());
       System.out.println("  pushed: " + aNode.get("pushed_at").toString());
-    }
-   
-    
+    }    
   }
 }

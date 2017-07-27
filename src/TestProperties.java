@@ -10,15 +10,18 @@ public class TestProperties {
     
     System.out.println("Before");
 
-    String personalAccessToken = GitHubHelper.getObj().getPAT();
-    String organization = GitHubHelper.getObj().getProperty("ORGANIZATION");
-    String userid = GitHubHelper.getObj().getProperty("USER");
+    GitHubHelper[] gitHubHelper = new GitHubHelper[2];
+    gitHubHelper[0]= new GitHubHelper();
+    gitHubHelper[1]= new GitHubHelper("ibmLogon.properties");
     
+    for (GitHubHelper gHH : gitHubHelper) {
+      System.out.println("\n\nENDPOINT " + gHH.getEndPoint());
+      System.out.println("PAT " + gHH.getPAT());
+      System.out.println("ORGANIZATION " + gHH.getProperty("ORGANIZATION"));
+      System.out.println("USER " + gHH.getProperty("USER"));
+    }    
     System.out.println("After");
     
-    System.out.println("The PAT is: " + personalAccessToken + 
-        " Organization: " + organization + 
-        " User: " + userid);
   }
   // foo - another conflict
 }

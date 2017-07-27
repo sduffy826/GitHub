@@ -1,3 +1,4 @@
+package com.corti.graphql.utils;
 import java.io.IOException;
 
 /**
@@ -5,7 +6,7 @@ import java.io.IOException;
  * @author sduffy *
  */
 public class GitHubHelper {
-  private static final boolean DEBUG = true;
+  private static final boolean DEBUG = false;
   private java.util.Properties properties;
   private String propertiesFile = "logon.properties";  // Default
   

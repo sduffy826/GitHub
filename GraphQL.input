@@ -1,0 +1,372 @@
+# Comments start with # and are ignored, the name used in the map is identified with
+# the @ sign.
+
+# Rate information shows limit, how much you have lef and when it resets (doesn't work now)
+@UsageAmount
+query { 
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}
+
+@SearchQuery
+query {
+  search(query: "repo:Resiliency/IRP-m updated:>2017-07-08T16:46:00Z", type: ISSUE, first: 1) {
+    issueCount    
+    codeCount
+    userCount
+    repositoryCount
+  }
+}  
+
+# Resiliency repositories
+@ ResiliencyRepos
+query { 
+  repositoryOwner(login: "Resiliency") {
+    repositories(first: 10) {
+      totalCount
+      edges {
+        node {
+          __typename
+          name
+          description  # No value, put to show
+          id           # Repo id
+          homepageUrl  # No value, put to show
+          url          # url
+          createdAt    # Created DateTime
+          updatedAt    # Last updated
+          owner {
+            __typename
+            id
+            login
+          }                   
+        }
+      }
+    }
+  }
+}
+
+# Resiliency org info
+@GetResiliencyOrgId
+query { 
+  organization(login: "Resiliency") { 
+    __typename
+    aname: name 
+    url 
+    id
+    members(first: 100) {      
+      edges {
+        node {
+          __typename          
+          id
+          email
+          login
+          name
+        }
+      }
+    }  
+  } 
+}
+
+# Just a test
+@ TestIt
+{
+  repositoryOwner(login: "media3") {
+    repository(name: "IRP-m") { id }
+  }
+}
+
+
+# Login info
+@LoginInfo
+{
+  viewer { login }
+}
+
+# Look at repository owned by sduffy826, get recipies repo, look at commit history
+# and show detail
+# --------------------------------------------------------------------------------
+@ RecipeCommits
+{
+  repositoryOwner(login: "sduffy826") {
+    repository(name: "recipes") {
+      ref(qualifiedName: "master") {
+        target {
+          ... on Commit {
+            history(first: 10) {
+              edges {
+                node {
+                  author {
+                    name
+                  }
+                  message
+                  tree {
+                    entries {
+                      name
+                    }
+                  }
+                }
+              }
+            }
+            author {
+              email
+            }
+            message
+          }
+        }
+      }
+    }
+  }
+}
+
+# Get schema of all types
+# -----------------------
+@ GetSchema
+{ 
+  __schema { 
+    types { 
+      name 
+      fields {
+        name
+        type { name }
+      }
+    }
+  }
+}
+
+
+# Get viewer information, the repos, info about person (id, name, company...)
+# ---------------------------------------------------------------------------
+@ GetFirst100Repos
+query { 
+  viewer {    
+    id
+    name
+    company
+    email
+    isHireable
+  }
+  repositoryOwner(login: "Resiliency") {
+    repositories(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) { 
+      edges { 
+        node {         
+          name          
+          description 
+          id 
+          updatedAt
+          url
+          createdAt
+        }
+      }
+    }
+  }
+}
+
+
+# Get viewer information, the repos, info about person (id, name, company...)
+# ---------------------------------------------------------------------------
+@ IRPIssues
+{
+  repositoryOwner(login: "Resiliency") {
+    repository(name: "IRP-m") {
+      issues(   
+    }
+  }
+}
+ 
+@ IRPNewIssuesOld
+fragment UserFields on User {
+  id
+  login
+  name
+  email
+}
+
+query {
+  search(query: "repo:Resiliency/IRP-m updated:>2017-07-08T16:46:00Z", type: ISSUE, first: 10) {
+    issueCount    
+    codeCount
+    userCount
+    repositoryCount
+    edges {
+      node {
+        ... on Issue {
+          assignees(first: 10) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+          body
+          comments(first: 10) {
+            edges {
+              node {
+                __
+                id     # This is an id
+                body
+                createdAt
+              }
+            }
+          }
+          labels(first: 99) {
+            edges {
+              node {
+                name
+                repository {
+                  id
+                }
+                color                
+              }
+            }
+          }
+          id
+          updatedAt
+        }
+      }
+    }
+  }
+}    
+    
+# ===========================================================================    
+  
+@ IRPNewIssues    
+# ----------------------------------------------- FRAGMENT: IssueCommentFields
+fragment IssueCommentFields on IssueComment {
+  id
+  author {
+    ... on User {
+      ...UserFields
+    }
+  }
+  bodyText
+  createdAt
+  lastEditedAt
+}
+
+# ----------------------------------------------- FRAGMENT: IssueFields
+fragment IssueFields on Issue {
+  id
+  repository {
+    id
+  }
+  assignees(first: 10) {
+    edges {
+      node {
+        ...UserFields
+      }
+    }
+  }
+  author {
+    ...UserFields
+  }
+  bodyText
+  closed
+  comments(first: 10) {
+    edges {
+      node {
+        ...IssueCommentFields
+      }
+    }
+  }
+  createdAt  
+  
+  editor {
+    ... on User {
+      ...UserFields
+    }
+  }
+ 
+  labels(first: 99) {
+    edges {
+      node {
+        ...LabelFields                
+      }
+    }
+  }
+  
+  lastEditedAt
+  
+  milestone {
+    ...MilestoneFields
+  }
+  number # Issue number
+  
+  participants(first: 100) {
+    edges {
+      node {
+        ...UserFields
+      }
+    }
+  }
+  
+  state
+  title
+  url
+}
+
+# ----------------------------------------------- FRAGMENT: LabelFields
+fragment LabelFields on Label {
+  id
+  name
+  repository {
+    id
+  }
+}  
+
+# ----------------------------------------------- FRAGMENT: MilestoneFields
+fragment MilestoneFields on Milestone {
+  # Milestone object
+  id
+  creator {
+    ... on User {
+      ...UserFields
+    }
+  }
+  description
+  dueOn        # Identifieds due date of milestone
+  state        # State of milestone
+  title        # Title  
+}
+
+# ----------------------------------------------- FRAGMENT: RateLimitFields
+#fragment RateLimitFields on Query {
+#  rateLimit {
+#    limit
+#    cost
+#    remaining
+#    resetAt
+#  }
+#}
+  
+# ----------------------------------------------- FRAGMENT: UserFields
+fragment UserFields on User {
+  id
+  login
+  name
+  email
+}
+
+
+# ----------------------- Q u e r y -------------------------
+query {
+  #rateLimit {
+  #  cost
+  #}
+  search(query: "repo:Resiliency/IRP-m updated:>2017-07-24T16:46:00Z", type: ISSUE, first: 1) {
+    issueCount    
+    codeCount
+    userCount
+    repositoryCount
+    edges {
+      node {
+        ... on Issue {
+          ...IssueFields
+        }
+      }
+    }
+  }
+}  

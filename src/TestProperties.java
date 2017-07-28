@@ -1,3 +1,4 @@
+import com.corti.graphql.utils.*;
 public class TestProperties {
 
   /**

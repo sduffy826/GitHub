@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Issue {
-  private String id;
+  private String issueId;
   private String repositoryId;
   private List<User> assignees;
   private User author;
@@ -26,7 +26,7 @@ public class Issue {
   public Issue() {
     super();
 
-    this.id = null;
+    this.issueId = null;
     this.repositoryId = null;
     this.assignees = null;
     this.author = null;
@@ -45,13 +45,13 @@ public class Issue {
     this.url = null; 
   }
 
-  public Issue(String id, String repositoryId, List<User> assignees,
+  public Issue(String issueId, String repositoryId, List<User> assignees,
       User author, String bodyText, boolean closed, List<IssueComment> comments,
       Timestamp createdAt, User editor, List<Label> labels, Timestamp lastEditedAt,
       Milestone mileStone, int number, List<User> participants, String state,
       String title, String url) {
     super();
-    this.id = id;
+    this.issueId = issueId;
     this.repositoryId = repositoryId;
     this.assignees = assignees;
     this.author = author;
@@ -71,8 +71,8 @@ public class Issue {
   }
 
   // Setters and getters
-  public String getId() {
-    return id;
+  public String getIssueId() {
+    return issueId;
   }
 
   public String getRepositoryId() {
@@ -139,8 +139,8 @@ public class Issue {
     return url;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setIssueId(String issueId) {
+    this.issueId = issueId;
   }
 
   public void setRepositoryId(String repositoryId) {
@@ -209,7 +209,7 @@ public class Issue {
 
   @Override
   public String toString() {
-    return "Issue [id=" + id + ", repositoryId=" + repositoryId + ", assignees="
+    return "Issue [issueId=" + issueId + ", repositoryId=" + repositoryId + ", assignees="
         + assignees + ", author=" + author + ", bodyText=" + bodyText
         + ", closed=" + closed + ", comments=" + comments + ", createdAt="
         + createdAt + ", editor=" + editor + ", labels=" + labels

@@ -71,7 +71,7 @@ public class TestGraphQL2 {
     client= HttpClients.createDefault();
     HttpPost httpPost= new HttpPost("https://api.github.com/graphql");
 
-    httpPost.addHeader("Authorization","bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    httpPost.addHeader("Authorization","bearer bbb");
     httpPost.addHeader("Accept","application/json");
     
     // Original with escaped quotes

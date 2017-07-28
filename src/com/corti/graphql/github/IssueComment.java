@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class IssueComment {
-  private String id;
+  private String issueCommentId;
   private String issuedId;
   
   private User author;
@@ -16,7 +16,7 @@ public class IssueComment {
   public IssueComment() {
     super();
     // TODO Auto-generated constructor stub
-    this.id = null;
+    this.issueCommentId = null;
     this.issuedId = null;
     this.author = null;
     this.bodyText = null;
@@ -24,10 +24,10 @@ public class IssueComment {
     this.lastEditedAt = null;
   }
   
-  public IssueComment(String id, String issuedId, User author, String bodyText,
+  public IssueComment(String issueCommentId, String issuedId, User author, String bodyText,
       Timestamp createdAt, Timestamp lastEditedAt) {
     super();
-    this.id = id;
+    this.issueCommentId = issueCommentId;
     this.issuedId = issuedId;
     this.author = author;
     this.bodyText = bodyText;
@@ -36,8 +36,8 @@ public class IssueComment {
   }
   
   // Getters and setters
-  public String getId() {
-    return id;
+  public String getissueCommentId() {
+    return issueCommentId;
   }
   public String getIssuedId() {
     return issuedId;
@@ -54,8 +54,8 @@ public class IssueComment {
   public Timestamp getLastEditedAt() {
     return lastEditedAt;
   }
-  public void setId(String id) {
-    this.id = id;
+  public void setissueCommentId(String issueCommentId) {
+    this.issueCommentId = issueCommentId;
   }
   public void setIssuedId(String issuedId) {
     this.issuedId = issuedId;
@@ -75,7 +75,7 @@ public class IssueComment {
   
   @Override
   public String toString() {
-    return "IssueComment [id=" + id + ", issuedId=" + issuedId + ", author="
+    return "IssueComment [issueCommentId=" + issueCommentId + ", issuedId=" + issuedId + ", author="
         + author + ", bodyText=" + bodyText + ", createdAt=" + createdAt
         + ", lastEditedAt=" + lastEditedAt + "]";
   }

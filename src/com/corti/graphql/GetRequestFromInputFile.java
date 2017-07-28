@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GetRequestFromInputFile {
-  private static boolean DEBUGIT = true;
+  private static boolean DEBUGIT = false;
   private static final String input = "GraphQL.input";
   private Path filePath = null;
   private Map<String, String[]> inputMap;

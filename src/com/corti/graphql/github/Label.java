@@ -4,28 +4,28 @@ import java.sql.Timestamp;
 
 public class Label {
 
-  private String id;
+  private String labelId;
   private String repositoryId;
   private String name;
   
   // Constructors  
   public Label() {
     super();
-    this.id = null;
+    this.labelId = null;
     this.repositoryId = null;
     this.name = null;      
   }
   
-  public Label(String id, String name) {
+  public Label(String labelId, String name) {
     super();
-    this.id = id;
+    this.labelId = labelId;
     this.repositoryId = repositoryId;
     this.name = name;
   }
   
   // Getters and setters
-  public String getId() {
-    return id;
+  public String getlabelId() {
+    return labelId;
   }
   public String getRepositoryId() {
     return repositoryId;
@@ -33,8 +33,8 @@ public class Label {
   public String getName() {
     return name;
   }
-  public void setId(String id) {
-    this.id = id;
+  public void setlabelId(String labelId) {
+    this.labelId = labelId;
   }
   public void setRepositoryId(String repositoryId) {
     this.repositoryId = repositoryId;
@@ -45,6 +45,6 @@ public class Label {
 
   @Override
   public String toString() {
-    return "Label [id=" + id + ", repositoryId=" + repositoryId + ", name=" + name + "]";
+    return "Label [labelId=" + labelId + ", repositoryId=" + repositoryId + ", name=" + name + "]";
   }    
 }

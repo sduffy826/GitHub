@@ -32,12 +32,12 @@ query {
         node {
           __typename
           name
-          description  # No value, put to show
-          id           # Repo id
-          homepageUrl  # No value, put to show
-          url          # url
-          createdAt    # Created DateTime
-          updatedAt    # Last updated
+          description        # No value, put to show
+          repositoryId: id   # Repo id
+          homepageUrl        # No value, put to show
+          url                # url
+          createdAt          # Created DateTime
+          updatedAt          # Last updated
           owner {
             __typename
             id
@@ -249,9 +249,9 @@ fragment IssueCommentFields on IssueComment {
 
 # ----------------------------------------------- FRAGMENT: IssueFields
 fragment IssueFields on Issue {
-  id
+  issueId: id
   repository {
-    id
+    repositoryId: id
   }
   assignees(first: 10) {
     edges {
@@ -310,17 +310,17 @@ fragment IssueFields on Issue {
 
 # ----------------------------------------------- FRAGMENT: LabelFields
 fragment LabelFields on Label {
-  id
+  labelId: id
   name
   repository {
-    id
+    repositoryId: id
   }
 }  
 
 # ----------------------------------------------- FRAGMENT: MilestoneFields
 fragment MilestoneFields on Milestone {
   # Milestone object
-  id
+  milestonId: id
   creator {
     ... on User {
       ...UserFields
@@ -344,7 +344,7 @@ fragment MilestoneFields on Milestone {
   
 # ----------------------------------------------- FRAGMENT: UserFields
 fragment UserFields on User {
-  id
+  userId: id
   login
   name
   email

@@ -24,7 +24,7 @@ public class Label {
   }
   
   // Getters and setters
-  public String getlabelId() {
+  public String getLabelId() {
     return labelId;
   }
   public String getRepositoryId() {
@@ -33,7 +33,7 @@ public class Label {
   public String getName() {
     return name;
   }
-  public void setlabelId(String labelId) {
+  public void setLabelId(String labelId) {
     this.labelId = labelId;
   }
   public void setRepositoryId(String repositoryId) {

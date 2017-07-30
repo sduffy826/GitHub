@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 
 import com.corti.dateutils.Convert;
+import com.corti.jsonutils.JsonUtils;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +52,11 @@ public class TestPlayground {
       
       // Show getter
       System.out.println(node.get("animal").get("type").asText());
-      System.out.println(getTextField(getJnodeField(node,"aimal"),"type"));
+      
+      // Show how to use the utility class I wrote, it doesn't throw exception :) (returns null)
+      JsonUtils jsonUtils = new JsonUtils();      
+      System.out.println(jsonUtils.getText(jsonUtils.getJsonNode(node,"animal"),"type"));
+      System.out.println(jsonUtils.getText(jsonUtils.getJsonNode(node,"nimal"),"type"));
     }
     catch (JsonGenerationException e1) { e1.printStackTrace(); }
     catch (IOException e2) { e2.printStackTrace(); }    

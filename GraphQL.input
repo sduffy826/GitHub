@@ -236,7 +236,10 @@ query {
 @ IRPNewIssues    
 # ----------------------------------------------- FRAGMENT: IssueCommentFields
 fragment IssueCommentFields on IssueComment {
-  id
+  issueCommentId: id
+  issue {
+    issueId: id 
+  }
   author {
     ... on User {
       ...UserFields

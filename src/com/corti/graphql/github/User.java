@@ -1,8 +1,7 @@
 package com.corti.graphql.github;
 
 public class User {
-
-  private String id;
+  private String userId;
   private String login;
   private String name;
   private String email;
@@ -10,23 +9,23 @@ public class User {
   // Constructors  
   public User() {
     super();
-    this.id = null;
+    this.userId = null;
     this.login = null;
     this.name = null;
     this.email = null;  
   }
   
-  public User(String id, String login, String name, String email) {
+  public User(String userId, String login, String name, String email) {
     super();
-    this.id = id;
+    this.userId = userId;
     this.login = login;
     this.name = name;
     this.email = email;
   }
   
   // Getters and setters
-  public String getId() {
-    return id;
+  public String getUserId() {
+    return userId;
   }
   public String getLogin() {
     return login;
@@ -37,8 +36,8 @@ public class User {
   public String getEmail() {
     return email;
   }
-  public void setId(String id) {
-    this.id = id;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
   public void setLogin(String login) {
     this.login = login;
@@ -52,7 +51,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "User [id=" + id + ", login=" + login + ", name=" + name + ", email="
+    return "User [userId=" + userId + ", login=" + login + ", name=" + name + ", email="
         + email + "]";
   }    
 }

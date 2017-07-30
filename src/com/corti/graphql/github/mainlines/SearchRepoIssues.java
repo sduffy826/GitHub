@@ -22,8 +22,9 @@ import org.apache.http.impl.client.HttpClients;
 
 import com.corti.graphql.GetRequestFromInputFile;
 import com.corti.graphql.utils.GitHubHelper;
-import com.corti.graphql.github.IssuesDeserializer;
+import com.corti.graphql.github.Issues;
 import com.corti.graphql.github.SearchQuery;
+import com.corti.graphql.github.deserializers.IssuesDeserializer;
 import com.corti.jsonutils.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.core.JsonFactory;
@@ -164,10 +165,11 @@ public class SearchRepoIssues {
       
       // ---
       JsonNode issueList = searchNode.get("edges");
-      IssuesDeserializer issuesDeserializer = new IssuesDeserializer(issueList);
       
-      System.out.println("\n\ntoString:" + issuesDeserializer.toString());
+      // Call method to return the issues deserialized
+      Issues issues = IssuesDeserializer.getIssueFromJsonNode(issueList);
       
+      System.out.println("\n\ntoString:" + issues.toString());      
       
       // SearchQuery sq1 = objectMapper.readValue(searchNode,
       // SearchQuery.class);

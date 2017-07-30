@@ -1,23 +1,29 @@
 package com.corti.graphql.github;
 
 import java.sql.Timestamp;
-import java.util.List;
 
+/**
+ * Class represents an 'issue' object with the attributes that we're interested in, the fields should
+ * be obvious (github names) except I made the 'id' fields more descriptive for the object they
+ * are related to.
+ * 
+ * @author sduffy
+ */
 public class Issue {
   private String issueId;
   private String repositoryId;
-  private List<User> assignees;
+  private Users assignees;
   private User author;
   private String bodyText;
   private boolean closed;
-  private List<IssueComment> comments;
+  private IssueComments comments;
   private Timestamp createdAt;
   private User editor;
-  private List<Label> labels; 
+  private Labels labels; 
   private Timestamp lastEditedAt;
   private Milestone mileStone;
   private int number;
-  private List<User> participants;
+  private Users participants;
   private String state;
   private String title;
   private String url;
@@ -45,10 +51,10 @@ public class Issue {
     this.url = null; 
   }
 
-  public Issue(String issueId, String repositoryId, List<User> assignees,
-      User author, String bodyText, boolean closed, List<IssueComment> comments,
-      Timestamp createdAt, User editor, List<Label> labels, Timestamp lastEditedAt,
-      Milestone mileStone, int number, List<User> participants, String state,
+  public Issue(String issueId, String repositoryId, Users assignees,
+      User author, String bodyText, boolean closed, IssueComments comments,
+      Timestamp createdAt, User editor, Labels labels, Timestamp lastEditedAt,
+      Milestone mileStone, int number, Users participants, String state,
       String title, String url) {
     super();
     this.issueId = issueId;
@@ -79,7 +85,7 @@ public class Issue {
     return repositoryId;
   }
 
-  public List<User> getAssignees() {
+  public Users getAssignees() {
     return assignees;
   }
 
@@ -95,7 +101,7 @@ public class Issue {
     return closed;
   }
 
-  public List<IssueComment> getComments() {
+  public IssueComments getComments() {
     return comments;
   }
 
@@ -107,7 +113,7 @@ public class Issue {
     return editor;
   }
 
-  public List<Label> getLabels() {
+  public Labels getLabels() {
     return labels;
   }
 
@@ -123,7 +129,7 @@ public class Issue {
     return number;
   }
 
-  public List<User> getParticipants() {
+  public Users getParticipants() {
     return participants;
   }
 
@@ -147,7 +153,7 @@ public class Issue {
     this.repositoryId = repositoryId;
   }
 
-  public void setAssignees(List<User> assignees) {
+  public void setAssignees(Users assignees) {
     this.assignees = assignees;
   }
 
@@ -163,7 +169,7 @@ public class Issue {
     this.closed = closed;
   }
 
-  public void setComments(List<IssueComment> comments) {
+  public void setComments(IssueComments comments) {
     this.comments = comments;
   }
 
@@ -175,7 +181,7 @@ public class Issue {
     this.editor = editor;
   }
   
-  public void setLabels(List<Label> labels) {
+  public void setLabels(Labels labels) {
     this.labels = labels;
   }
 
@@ -191,7 +197,7 @@ public class Issue {
     this.number = number;
   }
 
-  public void setParticipants(List<User> participants) {
+  public void setParticipants(Users participants) {
     this.participants = participants;
   }
 
@@ -210,7 +216,7 @@ public class Issue {
   @Override
   public String toString() {
     return "Issue [issueId=" + issueId + ", repositoryId=" + repositoryId + ", assignees="
-        + assignees + ", author=" + author + ", bodyText=" + bodyText
+        + assignees.toString() + ", author=" + author + ", bodyText=" + bodyText
         + ", closed=" + closed + ", comments=" + comments + ", createdAt="
         + createdAt + ", editor=" + editor + ", labels=" + labels
         + ", lastEditedAt=" + lastEditedAt + ", mileStone=" + mileStone 
@@ -218,4 +224,3 @@ public class Issue {
         + state + ", title=" + title + ", url=" + url + "]";
   } 
 }
- 

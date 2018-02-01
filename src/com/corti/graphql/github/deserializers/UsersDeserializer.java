@@ -10,7 +10,7 @@ public class UsersDeserializer {
 
   public static synchronized Users getUsersFromJsonNode(JsonNode gitHubEdgeJsonNode) {
     Users users = new Users();
-    if (gitHubEdgeJsonNode.isArray()) {
+    if (gitHubEdgeJsonNode != null && gitHubEdgeJsonNode.isArray()) {
       if (DEBUG) System.out.println("gitHubEdgeJsonNode is array, size: " + gitHubEdgeJsonNode.size());
       try {
         // Loop thru each node

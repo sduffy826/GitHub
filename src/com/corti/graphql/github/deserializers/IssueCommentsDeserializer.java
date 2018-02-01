@@ -10,7 +10,7 @@ public class IssueCommentsDeserializer {
 
   public static synchronized IssueComments getIssueCommentsFromJsonNode(JsonNode gitHubEdgeJsonNode) {
     IssueComments issueComments = new IssueComments();
-    if (gitHubEdgeJsonNode.isArray()) {
+    if (gitHubEdgeJsonNode != null && gitHubEdgeJsonNode.isArray()) {
       if (DEBUG) System.out.println("gitHubEdgeJsonNode is array, size: " + gitHubEdgeJsonNode.size());
       try {
         // Loop thru each node

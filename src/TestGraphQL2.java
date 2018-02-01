@@ -62,7 +62,7 @@ public class TestGraphQL2 {
     System.out.println(aString);
     */
   //  testGraphQL.callingGraph();
-  //  testGraphQL.callingIBMGraph();
+    testGraphQL.callingIBMGraph();
   }
   public void callingGraph(){ 
     CloseableHttpClient client= null;
@@ -71,7 +71,7 @@ public class TestGraphQL2 {
     client= HttpClients.createDefault();
     HttpPost httpPost= new HttpPost("https://api.github.com/graphql");
 
-    httpPost.addHeader("Authorization","bearer bbb");
+    httpPost.addHeader("Authorization","bearer 00135cf91868893df17a5c753136d9c2c4611ac8");
     httpPost.addHeader("Accept","application/json");
     
     // Original with escaped quotes
@@ -147,7 +147,7 @@ public class TestGraphQL2 {
         
     HttpPost httpPost= new HttpPost("https://github.ibm.com/api/graphql");
 
-    httpPost.addHeader("Authorization","bearer yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    httpPost.addHeader("Authorization","bearer f964e96052ac1c31afe4dbf2882576fea29e5931");
     httpPost.addHeader("Accept","application/json");
 
     httpPost.setConfig(localConfig);;
@@ -157,9 +157,11 @@ public class TestGraphQL2 {
     jsonString = "{ `query` : `{ viewer { login }}`}"; 
 
     jsonString = jsonString.replaceAll("`","\"");
+    
+    /*
     jsonString = repos.replaceAll("`", "\"");
     jsonString = schema.replaceAll("`", "\"");
-    
+    */
     
     //JSONObject jsonObj = new JSONObject();     
     //jsonobj.put("query", "{repository(owner: \"wso2-extensions\", name: \"identity-inbound-auth-oauth\") { object(expression: \"83253ce50f189db30c54f13afa5d99021e2d7ece\") { ... on Commit { blame(path: \"components/org.wso2.carbon.identity.oauth.endpoint/src/main/java/org/wso2/carbon/identity/oauth/endpoint/authz/OAuth2AuthzEndpoint.java\") { ranges { startingLine, endingLine, age, commit { message url history(first: 2) { edges { node {  message, url } } } author { name, email } } } } } } } }");

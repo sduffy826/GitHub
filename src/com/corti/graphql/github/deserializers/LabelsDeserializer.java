@@ -10,7 +10,7 @@ public class LabelsDeserializer {
 
   public static synchronized Labels getLabelsFromJsonNode(JsonNode gitHubEdgeJsonNode) {
     Labels labels = new Labels();
-    if (gitHubEdgeJsonNode.isArray()) {
+    if (gitHubEdgeJsonNode != null && gitHubEdgeJsonNode.isArray()) {
       if (DEBUG) System.out.println("gitHubEdgeJsonNode is array, size: " + gitHubEdgeJsonNode.size());
       try {
         // Loop thru each node

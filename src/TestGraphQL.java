@@ -44,7 +44,7 @@ public class TestGraphQL {
   private CloseableHttpResponse response = null;
   private String[] graphQLsDefined = null;
   
-  private Logger logger = null;
+  private MyLogger logger = null;
   
   public TestGraphQL() {
     objectMapper = new ObjectMapper();

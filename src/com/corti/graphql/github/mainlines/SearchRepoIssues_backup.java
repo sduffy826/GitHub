@@ -1,9 +1,15 @@
 package com.corti.graphql.github.mainlines;
 
+//import org.json.JSONObject;
+
 import java.io.BufferedReader;
+//import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.CookieSpecs;
@@ -17,15 +23,25 @@ import org.apache.http.impl.client.HttpClients;
 import com.corti.graphql.GetRequestFromInputFile;
 import com.corti.graphql.utils.GitHubHelper;
 import com.corti.graphql.github.Issues;
+import com.corti.graphql.github.SearchQuery;
 import com.corti.graphql.github.deserializers.IssuesDeserializer;
 import com.corti.jsonutils.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
+//import com.fasterxml.jackson.core.JsonFactory;
+//import com.fasterxml.jackson.core.JsonParser;
+//import com.fasterxml.jackson.core.JsonParseException;
+//import com.fasterxml.jackson.databind.JsonMappingException;
+//import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.logging.*;
 import com.corti.javalogger.LoggerUtils;
 
-public class SearchRepoIssues {
+public class SearchRepoIssues_backup {
   private static final boolean DEBUGIT = true;
+
+  // Json object mapper
+  private ObjectMapper objectMapper = null;
 
   // Common objects in the class
   private JsonUtils jsonUtils = null;
@@ -37,11 +53,15 @@ public class SearchRepoIssues {
   private int issues2Get = 5;
   private String call2Make = "IRPNewIssues"; // "SearchQuery"; //
                                              // "IRPNewIssues";
-  public SearchRepoIssues() {
+
+  public SearchRepoIssues_backup() {
+    objectMapper = new ObjectMapper();
     jsonUtils = new JsonUtils();
 
-    logger = (new LoggerUtils()).getLogger("GitHubLogger","GitHubTestingLogger");
-    logger.info("=================================================================");
+    logger = (new LoggerUtils()).getLogger("GitHubLogger",
+        "GitHubTestingLogger");
+    logger.info(
+        "=================================================================");
     logger.info("Started, using GraphQL input: "
         + GetRequestFromInputFile.getRef().getFilePath().toString());
   }
@@ -50,7 +70,7 @@ public class SearchRepoIssues {
    * @param args
    */
   public static void main(String[] args) {
-    SearchRepoIssues searchRepoIssues = new SearchRepoIssues();
+    SearchRepoIssues_backup searchRepoIssues = new SearchRepoIssues_backup();
     searchRepoIssues.callingIBMGraph(searchRepoIssues.issues2Get,
         searchRepoIssues.call2Make);
   }
@@ -94,10 +114,15 @@ public class SearchRepoIssues {
     // the road make it more robust... maybe try to create a jsonNode for the
     // string and if it fails then add the query (if passed user gave valid json
     // statement)
-    String jsonString = jsonUtils.getJsonStringForKeyAndValue("query",gitHubGraphQLQuery);
+    String jsonString = jsonUtils.getJsonStringForKeyAndValue("query",
+        gitHubGraphQLQuery);
 
     if (DEBUGIT)
-      logger.info("jsonValue:" + gitHubGraphQLQuery + "\njsonString:" + jsonString);
+      logger.info(
+          "jsonValue:" + gitHubGraphQLQuery + "\njsonString:" + jsonString);
+
+    System.out.println(jsonUtils.prettifyIt(jsonString));
+    System.out.println(gitHubGraphQLQuery);
 
     try {
       StringEntity entity = new StringEntity(jsonString); // gitHubGraphQLQuery);
@@ -116,32 +141,40 @@ public class SearchRepoIssues {
       while ((line = reader.readLine()) != null) {
         builder.append(line);
       }
-      
-      if (DEBUGIT) {
-        logger.info("Response below:");
-        logger.info(jsonUtils.prettifyIt(builder.toString()));
-      }
+      logger.info("Response below:");
+      logger.info(jsonUtils.prettifyIt(builder.toString()));
 
-      // Convert response body to json node
       JsonNode myNode = jsonUtils.getJsonNodeForJsonString(builder.toString());
+      jsonUtils.dumpNode(myNode);
+
+      JsonNode dataNode = myNode.get("data");
+      JsonNode searchNode = dataNode.get("search");
+      String searchNodeString = searchNode.toString();
+      System.out.println("New: " + searchNodeString);
+
+      // Create a java pojo from object
+      // SearchQuery sq = objectMapper.readValue(searchNode, SearchQuery.class;
+
+      SearchQuery sq2 = jsonUtils.getPojoFromJsonNode(searchNode,
+          SearchQuery.class);
+      System.out.println(sq2);
+
+      System.out.println("DumpInfo");
+      jsonUtils.dumpInfo(SearchQuery.class);
+      System.out.println("DumpInfo done");
       
-      if (DEBUGIT) {
-        System.out.println("Calling jsonUtils.dumpNode();");
-        jsonUtils.dumpNode(myNode);
-      }
-      
-      // Get the search json object, that's where the values we want are
-      JsonNode searchNode = jsonUtils.getJsonNode(jsonUtils.getJsonNode(myNode,  "data"),"search");
-         
       // ---
       JsonNode issueList = searchNode.get("edges");
       
       // Call method to return the issues deserialized
       Issues issues = IssuesDeserializer.getIssueFromJsonNode(issueList);
       
-      // Write the results to screen
-      System.out.println("\n\nissues.toString():" + issues.toString());     
+      System.out.println("\n\ntoString:" + issues.toString());      
       
+      // SearchQuery sq1 = objectMapper.readValue(searchNode,
+      // SearchQuery.class);
+      // System.out.println(myNode.asText());
+
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     } catch (ClientProtocolException e) {

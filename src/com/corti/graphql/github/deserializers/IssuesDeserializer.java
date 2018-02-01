@@ -7,10 +7,10 @@ public class IssuesDeserializer {
   private static final boolean DEBUG = true;
 
   private IssuesDeserializer() { }
-
-  public static synchronized Issues getIssueFromJsonNode(JsonNode gitHubEdgeJsonNode) {
-    Issues issues = new Issues();
-    if (gitHubEdgeJsonNode.isArray()) {
+  
+  // Helper, this does the work on getting the issues
+  private static Issues getIssuesHelper(JsonNode gitHubEdgeJsonNode, Issues issues) {
+    if (gitHubEdgeJsonNode != null && gitHubEdgeJsonNode.isArray()) {
       if (DEBUG) System.out.println("gitHubEdgeJsonNode is array, size: " + gitHubEdgeJsonNode.size());
       try {
         // Loop thru each node
@@ -28,6 +28,17 @@ public class IssuesDeserializer {
     } else {
       if (DEBUG) System.out.println("gitHubEdgeJsonNode is NOT an array");
     }
-    return issues;
+    return issues;    
   }
+  
+  // Return a list of issues based on the json node
+  public static synchronized Issues getIssueFromJsonNode(JsonNode gitHubEdgeJsonNode) {
+    Issues issues = new Issues();
+    return getIssuesHelper(gitHubEdgeJsonNode, issues);
+  }
+  
+  // Append the issues from the json node to the issue list passed in
+  public static synchronized Issues getIssueFromJsonNode(JsonNode gitHubEdgeJsonNode, Issues issues) {
+    return getIssuesHelper(gitHubEdgeJsonNode, issues);
+  }  
 }

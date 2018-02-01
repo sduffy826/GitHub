@@ -44,12 +44,14 @@ public class TestGraphQL {
   private CloseableHttpResponse response = null;
   private String[] graphQLsDefined = null;
   
-  private MyLogger logger = null;
+  //private MyLogger logger = null;  (old declare)
+  private Logger logger = null;
   
   public TestGraphQL() {
     objectMapper = new ObjectMapper();
     jsonUtils = new JsonUtils();
-    graphQLsDefined = GetRequestFromInputFile.getRef().getKeys();
+    graphQLsDefined = GetRequestFromInputFile.getRef().getKeys();  
+    
     logger = (new LoggerUtils()).getLogger("GitHubLogger", "GitHubTestingLogger");
     logger.info("=================================================================");
     logger.info("Started, using GraphQL input: " + GetRequestFromInputFile.getRef().getFilePath().toString());
@@ -65,19 +67,39 @@ public class TestGraphQL {
     String call2Make = "GetResiliencyOrgId";
     
     testGraphQL.callingIBMGraph(99,call2Make); //"IRPNewIssues"); //"ResiliencyRepos");
+    
+    // call other one
+    testGraphQL.callingGraph();
   }
 
   public void callingGraph() {
+    // String for the repository query
+    String repos = 
+        "{ `query` : `query { viewer { repositories(first: 10) { edges { node { name description id updatedAt url } } } id name company email isHireable } }` }";
+    
+    // Get helper object that's using the ibm logon properties
+    GitHubHelper gitHubHelper = new GitHubHelper("Logon.properties");
+    
+       
     CloseableHttpClient client = null;
     CloseableHttpResponse response = null;
 
     client = HttpClients.createDefault();
-    HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
+    HttpPost httpPost = new HttpPost(gitHubHelper.getEndPoint());
 
-    httpPost.addHeader("Authorization", "Bearer myToken");
+    httpPost.addHeader("Authorization", "bearer " + gitHubHelper.getPAT());
     httpPost.addHeader("Accept", "application/json");
 
-    String jsonString = "{query:{repository(owner: \"wso2-extensions\", name: \"identity-inbound-auth-oauth\") { object(expression: \"83253ce50f189db30c54f13afa5d99021e2d7ece\") { ... on Commit { blame(path: \"components/org.wso2.carbon.identity.oauth.endpoint/src/main/java/org/wso2/carbon/identity/oauth/endpoint/authz/OAuth2AuthzEndpoint.java\") { ranges { startingLine, endingLine, age, commit { message url history(first: 2) { edges { node {  message, url } } } author { name, email } } } } } } } }}";
+    // Original with escaped quotes
+    String jsonString = "{ \"query\" : \"query { viewer { login }}\"}";
+    
+    // More readable attempt :)
+    jsonString = "{ `query` : `{ viewer { login }}`}"; 
+    jsonString = jsonString.replaceAll("`","\"");
+    // jsonString = schema.replaceAll("`", "\"");
+    //jsonString = repos.replaceAll("`", "\"");
+    
+    // String jsonString = "{query:{repository(owner: \"wso2-extensions\", name: \"identity-inbound-auth-oauth\") { object(expression: \"83253ce50f189db30c54f13afa5d99021e2d7ece\") { ... on Commit { blame(path: \"components/org.wso2.carbon.identity.oauth.endpoint/src/main/java/org/wso2/carbon/identity/oauth/endpoint/authz/OAuth2AuthzEndpoint.java\") { ranges { startingLine, endingLine, age, commit { message url history(first: 2) { edges { node {  message, url } } } author { name, email } } } } } } } }}";
 
     // JSONObject jsonObj = new JSONObject();
     // jsonobj.put("query", "{repository(owner: \"wso2-extensions\", name:

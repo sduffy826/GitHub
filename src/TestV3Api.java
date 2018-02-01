@@ -49,7 +49,7 @@ public class TestV3Api {
         
         HttpGet http= new HttpGet("https://github.ibm.com/api/v3/user");
 
-        http.addHeader("Authorization","token f964e96052ac1c31afe4dbf2882576fea29e5931");
+        http.addHeader("Authorization","token xxxx DeletedHardcodedToken xxxx");
         http.addHeader("Accept","application/json");
 
         /*

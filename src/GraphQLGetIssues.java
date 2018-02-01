@@ -45,7 +45,7 @@ public class GraphQLGetIssues {
   private CloseableHttpClient client = null;
   private CloseableHttpResponse response = null;
   
-  private MyLogger logger = null;
+  private Logger logger = null;
   
   private int issues2Get = 5;
   private String call2Make = "IRPNewIssues"; //"SearchQuery"; // "IRPNewIssues";
